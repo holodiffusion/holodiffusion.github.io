@@ -1,8 +1,327 @@
 <!DOCTYPE html>
-<html>
-<body>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="With HoloDiffusion, we propose the first true 3D diffusion based unconditional generative
+        model which is trained without having access to any ground truth 3D data. We train the model using only
+        posed-image supervision.">
+  <meta name="keywords" content="neural-representations, regular-structures, volume-rendering, spatial-representation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<h1>HoloDiffusion: training a 3D diffusion model using 2D Images</h1>
+  <title>HOLO DIFFUSION: Training a 3D Diffusion Model using 2D Images</title>
+
+  <!-- StyleSheet for fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <!-- StyleSheets (css) for appearance -->
+  <link rel="stylesheet" type="text/css" href="./static/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="./static/slick/slick-theme.css"/>
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <!-- <link rel="stylesheet" href="./static/css/fontawesome.all.min.css"> -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <!-- More JavaScripts -->
+  <!-- <script src="./static/js/fontawesome.all.min.js"></script> -->
+  <script src="https://kit.fontawesome.com/0bf72752d4.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <!-- <script type="text/javascript" src="./static/slick/slick.min.js"></script> -->
+  <script src="./static/js/index.js"></script>
+  <!-- Math -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Overridden style elements: -->
+  <!-- Reduced the vertical padding of the Section elements in order to make good use of available content space -->
+  <style>
+    .section{
+      padding: 1rem 1.5rem;
+    }
+    p{
+      font-size: large;
+    }
+  </style>
+
+</head>
+
+<body>
+<section class="hero">
+  <div class="hero-body" style="padding-bottom: 10px;">
+    <div class="container is-fullhd">
+      <div class="container is-fullhd has-text-centered">
+        <h1 class="title is-1 publication-title">
+          <strong>HOLODIFFUSION</strong>: Training a 3D Diffusion Model using 2D Images
+        </h1>
+        <div class="is-size-5 publication-authors">
+          <div class="author-block">
+            <div class="author-portrait">
+              <img src="./static/images/portraits/animesh-karnewar.jpg" class="rgb preload" />
+            </div>
+            <a href="https://akanimax.github.io/" target="_blank">Animesh Karnewar</a><sup>1 <i class="fa-brands fa-meta" style="color: #037dff;"></i> *</sup></div>
+          <div class="author-block">
+            <div class="author-portrait">
+              <img src="./static/images/portraits/andrea-vedaldi.jpg" class="rgb preload" />
+            </div>
+            <a href="https://www.robots.ox.ac.uk/~vedaldi" target="_blank">Andrea Vedaldi</a><sup> <i class="fa-brands fa-meta" style="color: #037dff;"></i> </sup></div>
+          <div class="author-block">
+            <div class="author-portrait">
+              <img src="./static/images/portraits/david-novotny.jpg" class="rgb preload" />
+            </div>
+            <a href="https://d-novotny.github.io/" target="_blank">David Novotny</a><sup> <i class="fa-brands fa-meta" style="color: #037dff;"></i> *</sup></div>
+          <div class="author-block">
+            <div class="author-portrait">
+              <img src="./static/images/portraits/niloy-mitra.jpg" class="rgb preload" />
+            </div>
+            <a href="http://www0.cs.ucl.ac.uk/staff/n.mitra/" target="_blank">Niloy Mitra</a><sup>1</sup></div>
+        </div>
+        <div class="column has-text-centered">
+          <div class="publication-links">
+          <!----------------------------------------------------------------------------------------------------------->
+          <!-- Add the links below when available -->
+          <!----------------------------------------------------------------------------------------------------------->
+            <!-- Uncomment this updated arxiv link once done -->
+            <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2205.10824" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv </span>
+                </a>
+            </span> -->
+            <span class="link-block">
+              <a href="static/docs/holo_diffusion_fullres.pdf"
+                 target="_blank" style="background-color: #037dff;"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                    <i class="far fa-file-alt"></i>
+                </span>
+                <span>Paper (pdf)</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="#" style="background-color: #037dff;"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code</span>
+                </a>
+            </span>
+            <p>*indicates equal contribution</p>
+          <!----------------------------------------------------------------------------------------------------------->
+          </div>
+        </div>
+        <div class="is-size-5 publication-authors">
+          <span class="author-block"><sup>1</sup>University College London,</span>
+          <span class="author-block"><sup> <i class="fa-brands fa-meta" style="color: #037dff;"></i> </sup> Meta-AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr/>
+
+<section class="hero teaser">
+  <div class="hero-body" style="padding-bottom: 10px;">
+    <div class="container is-fullhd">
+    <!--------------------------------------------------------------------------------------------------------------->
+    <!-- Teaser video and figure                                                                                   -->
+    <!--------------------------------------------------------------------------------------------------------------->
+    <video autoplay loop muted playsinline src="./static/videos/main_teaser/teaser_bar.mp4" 
+      width="100%"></video>
+      <video autoplay loop muted playsinline src="./static/videos/main_teaser/mega_samples_grid_2_slow.mp4" 
+      width="100%" style="padding-bottom: 20px;"></video>
+    <img src="./static/figures/teaser.png" alt="holo diffusion teaser figure"/>
+    <!--------------------------------------------------------------------------------------------------------------->
+      <h2 class="subtitle has-text-justified" style="margin-bottom: 40px;">
+        We present <strong>HOLODIFFUSION</strong> as the first 3D-aware generative diffusion model that produces 3D-consistent images and is trained 
+        with only posed image supervision. Here we show different generations, rendered from a sampling of views, from models trained on
+        different classes from the challenging 
+        <a href="https://github.com/facebookresearch/co3d" target="_blank"> CO3D </a> dataset. Some of our <em>randomly 
+        generated samples </em> are presented below.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-fullhd">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Diffusion models have emerged as the best approach for 
+            generative modeling of 2D images. Part of their success is
+            due to the possibility of training them on millions if not billions 
+            of images with a stable learning objective. However,
+            extending these models to 3D remains difficult for two reasons. 
+            First, finding a large quantity of 3D training data
+            is much harder than for 2D images. Second, while it is
+            conceptually trivial to extend the models to operate on 3D
+            rather than 2D grids, the associated cubic growth in memory 
+            and compute complexity makes this unfeasible. We address the first 
+            challenge by introducing a new diffusion setup
+            that can be trained, end-to-end, with only posed 2D images
+            for supervision, and the second challenge by proposing an
+            image formation model that decouples model memory from
+            spatial memory. We evaluate our method on real-world
+            data, using the CO3D dataset which has not been used to
+            train 3D generative models before. We show that our diffusion 
+            models are scalable, train robustly, and are competitive in terms 
+            of sample quality and fidelity to existing approaches for 
+            3D generative modeling.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<hr/>
+
+<section class="section">
+  <div class="container is-fullhd">
+    <div class="content has-text-justified">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <img src="./static/figures/pipeline_small.png" alt="Holo-diffusion conceptual illustration"/>
+      <p> 
+        <strong>Method Overview.</strong> Our HOLODIFFUSION that takes as input video frames for 
+        category-specific videos \( \lbrace s^i \rbrace \) and produces a 
+        diffusion-based generative model \( \mathcal{D}_\theta \). The model is trained
+        with only posed image supervision \(\lbrace (I_j^i , P_j^i )\rbrace\), 
+        without access to 3D ground-truth. Once trained, the model can generate 
+        view-consistent results from novel camera locations. 
+        Please refer to Sec. 3 of the 
+        <a href="./static/docs/holo_diffusion_fullres.pdf">paper</a> for details.
+
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr/>
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="content has-text-justified">
+      <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
+      <img src="./static/figures/fig_vpconsistency.png" alt="Holo-diffusion results"/>
+      <p> 
+        Evaluation of the consistency of the shape renders under camera motion. 
+        While ours (top) remains consistent, pi-GAN's
+results (bottom) suffer from significant appearance variations across view changes.
+      </p>
+    </div>
+  </div>
+</section> -->
+
+<section class="section">
+  <div class="container is-fullhd">
+    <div class="content has-text-justified">
+      <h2 class="title is-3 has-text-centered">Quantitative Scores</h2>
+      <img src="./static/figures/table.png" alt="Holo-diffusion results"/>
+      <p> 
+        <strong>Quantitative evaluation.</strong> 
+        FID and KID on 4 classes of CO3Dv2 comparing our HOLODIFFUSION with the baselines 
+        <a href="https://marcoamonteiro.github.io/pi-GAN-website" target="_blank">piGAN</a>, 
+        <a href="https://nvlabs.github.io/eg3d/" target="_blank">EG3D</a>, 
+        <a href="https://nv-tlabs.github.io/GET3D/" target="_blank">GET3D</a>, 
+        and the non-bootstrapped version of our HOLODIFFUSION. 
+        The column “VP” denotes whether renders of a method are 3D view-consistent or not.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr/>
+
+<section class="section" id="Video results">
+  <div class="container content is-fullhd">
+    <h2 class="title is-3 has-text-centered">More Qualitative Results</h2>
+    <div class="columns mb-1">
+      <div class="column is-one-third" style="padding: 0px;">
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/apple_colour.mp4" width="49%"></video>
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/apple_shaded_depth.mp4" width="49%"></video>
+      </div>
+      <div class="column is-one-third" style="padding: 0px;">
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/banana_colour.mp4" width="49%"></video>
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/banana_shaded_depth.mp4" width="49%"></video>
+      </div>
+      <div class="column is-one-third" style="padding: 0px;">
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/carrot_colour.mp4" width="49%"></video>
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/carrot_shaded_depth.mp4" width="49%"></video>
+      </div>
+    </div>
+    <div class="columns mb-1">
+      <div class="column is-half" style="padding: 0px;">
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/ball_colour.mp4" width="49%"></video>
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/ball_shaded_depth.mp4" width="49%"></video>
+      </div>
+      <div class="column is-half" style="padding: 0px;">
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/teddybear_colour.mp4" width="49%"></video>
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/teddybear_shaded_depth.mp4" width="49%"></video>
+      </div>
+    </div>
+    <div class="columns mb-1">
+      <div class="column is-half" style="padding: 0px;">
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/hydrant_colour.mp4" width="49%"></video>
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/hydrant_shaded_depth.mp4" width="49%"></video>
+      </div>
+      <div class="column is-half" style="padding: 0px;">
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/donut_colour.mp4" width="49%"></video>
+        <video autoplay loop muted playsinline src="./static/videos/more_qualitative_results/donut_shaded_depth.mp4" width="49%"></video>
+      </div>
+    </div>
+    <p>
+      <strong>Samples with colour and geometry.</strong> Samples drawn from the HOLODIFFUSION model trained on Co3Dv2 
+      are shown with the colour render (left) and the shaded-depth renders (right). 
+      The geometries are mostly clean, but include the base plane due to the real-object setting of Co3Dv2.
+    </p>
+  </div>
+</section>
+
+<hr/>
+
+<section class="section" id="BibTeX">
+  <div class="container content is-fullhd">
+    <h2 class="title is-3 has-text-centered">Bibtex</h2>
+    <pre><code>
+    @inproceedings{karnewar2023holodiffusion,
+      title={HOLODIFFUSION: Training a 3D Diffusion Model using 2D Images},
+      author={Karnewar, Animesh and Vedaldi, Andrea and Novotny, David and Mitra, Niloy},
+      booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+      year={2023}
+    }
+    </code></pre>
+  </div>
+</section>
+
+<section class="section" id="acknowledgements">
+  <div class="container content is-fullhd has-text-justified">
+    <h2 class="title is-3 has-text-centered">Acknowledgements</h2>
+    <div class="columns">
+      <div class="column is-5">
+        <img src="./static/images/logos/prime-eu-logo.png" alt="PRIME-EU logo" width="110%"/></div>
+      <div class="column">
+        <p><strong>Animesh and Niloy were partially funded by the European Union’s Horizon 2020 research and
+          innovation programme under the Marie Skłodowska-Curie grant agreement No. 956585.</strong>
+          This research has also been supported by <strong>MetaAI</strong> 
+          and the <strong>UCL AI Centre</strong>. Finally, Animesh thanks
+          <a href="https://mobile.twitter.com/jm_alexia">Alexia Jolicoeur-Martineau </a>
+          for the the helpful and insightful guidance on diffusion models.</p></div>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>
