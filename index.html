@@ -143,7 +143,7 @@
     <img src="https://geometry.cs.ucl.ac.uk/group_website/projects/2023/holodiffusion/webpage/static/figures/teaser.png" alt="holo diffusion teaser figure"/>
     <!--------------------------------------------------------------------------------------------------------------->
       <h2 class="subtitle has-text-justified" style="margin-bottom: 40px;">
-        We present <strong>HOLODIFFUSION</strong> as the first 3D-aware generative diffusion model that produces 3D-consistent images and is trained 
+        We present <strong>HoloDiffusion</strong> as the first 3D-aware generative diffusion model that produces 3D-consistent images and is trained 
         with only posed image supervision. Here we show different generations, rendered from a sampling of views, from models trained on
         different classes from the challenging 
         <a href="https://github.com/facebookresearch/co3d" target="_blank"> CO3D </a> dataset. Some of our <em>randomly 
@@ -197,7 +197,7 @@
       <h2 class="title is-3 has-text-centered">Method</h2>
       <img src="https://geometry.cs.ucl.ac.uk/group_website/projects/2023/holodiffusion/webpage/static/figures/pipeline_small.png" alt="Holo-diffusion conceptual illustration"/>
       <p> 
-        <strong>Method Overview.</strong> Our HOLODIFFUSION that takes as input video frames for 
+        <strong>Method Overview.</strong> Our HoloDiffusion that takes as input video frames for 
         category-specific videos \( \lbrace s^i \rbrace \) and produces a 
         diffusion-based generative model \( \mathcal{D}_\theta \). The model is trained
         with only posed image supervision \(\lbrace (I_j^i , P_j^i )\rbrace\), 
@@ -220,11 +220,11 @@
       <img src="https://geometry.cs.ucl.ac.uk/group_website/projects/2023/holodiffusion/webpage/static/figures/table.png" alt="Holo-diffusion results"/>
       <p> 
         <strong>Quantitative evaluation.</strong> 
-        FID and KID on 4 classes of CO3Dv2 comparing our HOLODIFFUSION with the baselines 
+        FID and KID on 4 classes of CO3Dv2 comparing our HoloDiffusion with the baselines 
         <a href="https://marcoamonteiro.github.io/pi-GAN-website" target="_blank">piGAN</a>, 
         <a href="https://nvlabs.github.io/eg3d/" target="_blank">EG3D</a>, 
         <a href="https://nv-tlabs.github.io/GET3D/" target="_blank">GET3D</a>, 
-        and the non-bootstrapped version of our HOLODIFFUSION. 
+        and the non-bootstrapped version of our HoloDiffusion. 
         The column “VP” denotes whether renders of a method are 3D view-consistent or not.
       </p>
     </div>
@@ -271,7 +271,7 @@
       </div>
     </div>
     <p>
-      <strong>Samples with colour and geometry.</strong> Samples drawn from the HOLODIFFUSION model trained on Co3Dv2 
+      <strong>Samples with colour and geometry.</strong> Samples drawn from the HoloDiffusion model trained on Co3Dv2 
       are shown with the colour render (left) and the shaded-depth renders (right). 
       The geometries are mostly clean, but include the base plane due to the real-object setting of Co3Dv2.
     </p>
